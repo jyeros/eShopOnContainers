@@ -21,8 +21,10 @@ namespace Ordering.BackgroundTasks
             CreateHostBuilder(args).Run();
         }
 
-        public static IWebHost CreateHostBuilder(string[] args) =>
-           WebHost.CreateDefaultBuilder(args)
+        public static IHost CreateHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
                 .ConfigureAppConfiguration((host, builder) =>
                 {
                     builder.SetBasePath(Directory.GetCurrentDirectory());
@@ -32,7 +34,6 @@ namespace Ordering.BackgroundTasks
                     builder.AddCommandLine(args);
                 })
                 .ConfigureLogging((host, builder) => builder.UseSerilog(host.Configuration).AddSerilog())
-                .UseStartup<Startup>()
                 .Build();
     }
 }
