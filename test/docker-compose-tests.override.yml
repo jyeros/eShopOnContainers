@@ -10,7 +10,7 @@ services:
       - "5672:5672" 
   sql.data:
     environment:
-      - SA_PASSWORD=Pass@word
+      - MSSQL_SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433"
